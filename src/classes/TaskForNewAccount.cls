@@ -1,7 +1,6 @@
 global class TaskForNewAccount {
     @InvocableMethod(Label = 'Create new Task object'
-            Description = 'Creates new Task object for new or updated Accounts'
-            category = 'Account')
+            Description = 'Creates new Task object for new or updated Accounts')
     public static void addTaskForUpdatedAccount(List<InvocableVariablesWrapper> insertedRecords) {
         for (InvocableVariablesWrapper insertedRecord : insertedRecords) {
             List<Task> tasks = [SELECT Id FROM Task WHERE Account.Id = :insertedRecord.account.Id];
@@ -14,6 +13,7 @@ global class TaskForNewAccount {
                 for (Task accTask : tasks) {
                     accTask.OwnerId = randomUser.Id;
                 }
+                update(tasks);
             }
         }
     }
