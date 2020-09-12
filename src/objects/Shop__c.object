@@ -201,6 +201,11 @@
         <unique>false</unique>
     </fields>
     <label>Shop</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <label>Shop Name</label>
         <type>Text</type>
