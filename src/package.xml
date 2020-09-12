@@ -4,7 +4,12 @@
         <members>Corporation__c</members>
         <members>Product2</members>
         <members>Shop__c</members>
+        <members>Account</members>
         <name>CustomObjects</name>
+    </types>
+    <types>
+        <members>TaskForNewAccount</members>
+        <name>ApexClass</name>
     </types>
     <version>48.0</version>
 </Package>
