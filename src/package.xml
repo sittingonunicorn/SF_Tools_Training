@@ -9,6 +9,11 @@
     </types>
     <types>
         <members>TaskForNewAccount</members>
+        <members>AddressCopierIterable</members>
+        <members>AddressCopierQueryLocator</members>
+        <members>FutureProcessor</members>
+        <members>InvokerBatchesAddressCopier</members>
+        <members>QueueableProcessor</members>
         <name>ApexClass</name>
     </types>
     <version>48.0</version>
