@@ -2,31 +2,46 @@ global class TaskForNewAccount {
     @InvocableMethod(Label = 'Create new Task object'
             Description = 'Creates new Task object for new or updated Accounts')
     public static void addTaskForUpdatedAccount(List<InvocableVariablesWrapper> insertedRecords) {
+        List<Id>accIds = new List<Id>();
         for (InvocableVariablesWrapper insertedRecord : insertedRecords) {
-            List<Task> tasks = [SELECT Id FROM Task WHERE Account.Id = :insertedRecord.account.Id];
+            accIds.add(insertedRecord.account.Id);
+        }
+        List<Task> tasks = [SELECT Id, WhatId FROM Task WHERE Account.Id IN :accIds];
+        for (InvocableVariablesWrapper insertedRecord : insertedRecords) {
+            List<Task> accountTasks =  getAccountTasks(tasks, insertedRecord.account.Id);
             User randomUser = getRandomUser();
-            if (insertedRecord.IsNew||tasks.size() < 3) {
+            if (insertedRecord.IsNew || accountTasks.size() < 3) {
                 Task task = createTask(insertedRecord.account);
                 task.OwnerId = randomUser.Id;
-                insert(task);
+                tasks.add(task);
             } else {
-                for (Task accTask : tasks) {
+                for (Task accTask : accountTasks) {
                     accTask.OwnerId = randomUser.Id;
                 }
-                update(tasks);
             }
         }
+        upsert tasks;
     }
 
-    private static User getRandomUser() {
+    private static List<Task> getAccountTasks(List<Task> tasks, Id id) {
+        List<Task> insertTasks = new List<Task>();
+        for (Task task : tasks) {
+            if (task.WhatId == id) {
+                insertTasks.add(task);
+            }
+        }
+        return insertTasks;
+    }
+
+    public static User getRandomUser() {
         List <User> activeUsers = [SELECT Id FROM User WHERE IsActive = TRUE];
         User randomUser = activeUsers.get(
-                Integer.valueOf((Math.random() * (activeUsers.size() - 1))));
+                Integer.valueOf((Math.random() * (activeUsers.size()-1))));
         return randomUser;
     }
 
     private static Task createTask(Account acc) {
-        Task newTask = new Task(WhatId = acc.Id, Subject = 'Negotiations with ' + acc.Name);
+        Task newTask = new Task(WhatId = acc.Id, Subject = 'Negotiations with '+acc.Name);
         return newTask;
     }
 
