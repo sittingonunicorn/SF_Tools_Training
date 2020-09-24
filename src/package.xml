@@ -15,7 +15,19 @@
         <members>InvokerBatchesAddressCopier</members>
         <members>QueueableProcessor</members>
         <members>AccountManager</members>
+        <members>AccountTriggerHandler</members>
+        <members>TriggerContext</members>
+        <members>EmailManager</members>
+        <members>AccountTriggerHandlerHelper</members>
         <name>ApexClass</name>
+    </types>
+    <types>
+        <members>AccountTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>Task</members>
+        <name>CustomObject</name>
     </types>
     <version>48.0</version>
 </Package>
