@@ -4,15 +4,16 @@
 
 public with sharing class AccountTriggerHandler {
     public static void beforeInsert(List<Account> accounts) {
-        AccountTriggerHandlerHelper.copyBillingAddressToShippingAddress(accounts);
+        AccountTriggerHandlerHelper.copyFaxToPhone(accounts);
     }
 
     public static void afterInsert(List<Account> accounts) {
         AccountTriggerHandlerHelper.createNewOpportunity(accounts);
+        AccountTriggerHandlerHelper.createChildAccount(accounts);
     }
 
-    public static void beforeUpdate(Map<Id, Account> newAccountsByIds, Map<Id, Account> oldAccountsByIds) {
-        AccountTriggerHandlerHelper.updateDescription(newAccountsByIds, oldAccountsByIds);
+    public static void beforeUpdate(Map<Id, Account> newAccountsByIds) {
+        AccountTriggerHandlerHelper.updateDescription(newAccountsByIds);
     }
 
     public static void afterUpdate(Map<Id, Account> newAccountsByIds, Map<Id, Account> oldAccountsByIds) {

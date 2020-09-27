@@ -9,7 +9,7 @@ trigger AccountTrigger on Account (before insert, before update, before delete, 
     } else if (Trigger.isAfter && Trigger.isInsert) {
         AccountTriggerHandler.afterInsert(Trigger.new);
     } else if (Trigger.isBefore && Trigger.isUpdate) {
-        AccountTriggerHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
+        AccountTriggerHandler.beforeUpdate(Trigger.newMap);
     } else if (Trigger.isAfter && Trigger.isUpdate) {
         AccountTriggerHandler.afterUpdate(Trigger.newMap, Trigger.oldMap);
     } else if (Trigger.isBefore && Trigger.isDelete) {

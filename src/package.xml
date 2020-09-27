@@ -21,6 +21,7 @@
         <members>AccountTriggerHandlerHelper</members>
         <members>TestTaskForNewAccount</members>
         <members>TestDataFactory</members>
+        <members>TestAccountTrigger</members>
         <name>ApexClass</name>
     </types>
     <types>

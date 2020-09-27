@@ -3,11 +3,11 @@
  */
 
 public with sharing class AccountTriggerHandlerHelper {
-    public static void copyBillingAddressToShippingAddress(List<Account> accounts) {
-        if (TriggerContext.isBeforeRepeatedRun()) {
+    public static void copyFaxToPhone(List<Account> accounts) {
+        if (TriggerContext.isBeforeInsertRepeatedRun()) {
             return;
         }
-        TriggerContext.setBeforeRepeatedRunTrue();
+        TriggerContext.setBeforeInsertRepeatedRunTrue();
         for (Account account : accounts) {
             if (account.Fax != null && account.Phone == null) {
                 account.Phone = account.Fax;
@@ -16,10 +16,6 @@ public with sharing class AccountTriggerHandlerHelper {
     }
 
     public static void createNewOpportunity(List<Account> accounts) {
-        if (TriggerContext.isAfterRepeatedRun()) {
-            return;
-        }
-        TriggerContext.setAfterRepeatedRunTrue();
         List<Opportunity> opportunities = new List<Opportunity>();
         for (Account account : accounts) {
             Opportunity opportunity = new Opportunity(
@@ -30,17 +26,25 @@ public with sharing class AccountTriggerHandlerHelper {
             opportunities.add(opportunity);
         }
         insert opportunities;
+
+    }
+
+    public static void createChildAccount(List<Account> accounts) {
+        if (TriggerContext.isAfterInsertRepeatedRun()) {
+            return;
+        }
+        TriggerContext.setAfterInsertRepeatedRunTrue();
         Account account = new Account(Name = 'TestTriggerApexOneAdditional',
                 Fax = '33333333', ParentId = accounts.get(0).Id
         );
         insert account;
     }
 
-    public static void updateDescription(Map<Id, Account> newAccountsByIds, Map<Id, Account> oldAccountsByIds) {
-        if (TriggerContext.isBeforeRepeatedRun()) {
+    public static void updateDescription(Map<Id, Account> newAccountsByIds) {
+        if (TriggerContext.isBeforeUpdateRepeatedRun()) {
             return;
         }
-        TriggerContext.setBeforeRepeatedRunTrue();
+        TriggerContext.setBeforeUpdateRepeatedRunTrue();
         for (Account account : newAccountsByIds.values()) {
             if (account.Description != null) {
                 account.Description = account.Description+'\n updated '+System.now();
@@ -52,10 +56,10 @@ public with sharing class AccountTriggerHandlerHelper {
 
     public static void createNewTaskForHighPriority(
             Map<Id, Account> newAccountsByIds, Map<Id, Account> oldAccountsByIds) {
-        if (TriggerContext.isAfterRepeatedRun()) {
+        if (TriggerContext.isAfterUpdateRepeatedRun()) {
             return;
         }
-        TriggerContext.setAfterRepeatedRunTrue();
+        TriggerContext.setAfterUpdateRepeatedRunTrue();
         List<Task> tasks = new List<Task>();
         List <User> activeUsers = [SELECT Id FROM User WHERE IsActive = TRUE];
         for (Account account : newAccountsByIds.values()) {
@@ -71,10 +75,10 @@ public with sharing class AccountTriggerHandlerHelper {
     }
 
     public static void restrictDeletionWithOpenTasks(Map<Id, Account> oldAccountsByIds) {
-        if (TriggerContext.isBeforeRepeatedRun()) {
+        if (TriggerContext.isBeforeInsertRepeatedRun()) {
             return;
         }
-        TriggerContext.setBeforeRepeatedRunTrue();
+        TriggerContext.setBeforeInsertRepeatedRunTrue();
         List<Task> openTasks = [
                 SELECT Id, Status, WhatId
                 FROM Task
