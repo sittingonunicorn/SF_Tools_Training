@@ -23,7 +23,7 @@ public with sharing class TestTaskForNewAccount {
         }
 
         Test.startTest();
-        TaskForNewAccount.addTaskForUpdatedAccount(wrappers);
+        TaskForNewAccount.addTaskForUpsertedAccount(wrappers);
         Test.stopTest();
 
         List<Task> tasks = [SELECT Id, Subject FROM Task WHERE WhatId IN :accs];
@@ -43,7 +43,7 @@ public with sharing class TestTaskForNewAccount {
         TestDataFactory.addAccountTasks(acc, [SELECT COUNT() FROM Task WHERE WhatId = :acc.Id], taskSubject);
 
         Test.startTest();
-        TaskForNewAccount.addTaskForUpdatedAccount(wrappers);
+        TaskForNewAccount.addTaskForUpsertedAccount(wrappers);
         Test.stopTest();
 
         List<Task> accountTasks = [SELECT Id, Subject, OwnerId FROM Task WHERE WhatId = :acc.Id];

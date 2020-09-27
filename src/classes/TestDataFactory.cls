@@ -22,7 +22,7 @@ public with sharing class TestDataFactory {
         insert contacts;
     }
 
-    public static void updateContactsAccountSynced(Account account, String recordsName, Boolean isSynced) {
+    public static void updateContactsAddAccountSynced(Account account, String recordsName, Boolean isSynced) {
         List<Contact> contacts = [SELECT Id FROM Contact WHERE LastName LIKE :recordsName+'%'];
         for (Contact contact : contacts) {
             contact.AccountId = account.Id;

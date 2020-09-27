@@ -14,7 +14,7 @@ public with sharing class TestFutureProcessor {
         TestDataFactory.createContactList(recordsName, recordsNumber);
         Account account = new Account(Name = recordsName, BillingCity = city);
         insert account;
-        TestDataFactory.updateContactsAccountSynced(account, recordsName, true);
+        TestDataFactory.updateContactsAddAccountSynced(account, recordsName, true);
     }
 
     @IsTest

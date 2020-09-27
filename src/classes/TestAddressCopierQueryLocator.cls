@@ -13,7 +13,7 @@ public with sharing class TestAddressCopierQueryLocator {
         TestDataFactory.createContactList(recordsName, batchSize);
         Account account = new Account(Name = recordsName, BillingCity = city);
         insert account;
-        TestDataFactory.updateContactsAccountSynced(account, recordsName, false);
+        TestDataFactory.updateContactsAddAccountSynced(account, recordsName, false);
     }
 
     @IsTest

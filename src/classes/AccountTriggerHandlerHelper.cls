@@ -34,7 +34,7 @@ public with sharing class AccountTriggerHandlerHelper {
             return;
         }
         TriggerContext.setAfterInsertRepeatedRunTrue();
-        Account account = new Account(Name = 'TestTriggerApexOneAdditional',
+        Account account = new Account(Name = accounts.get(0).Name + 'Child',
                 Fax = '33333333', ParentId = accounts.get(0).Id
         );
         insert account;
@@ -45,17 +45,19 @@ public with sharing class AccountTriggerHandlerHelper {
             return;
         }
         TriggerContext.setBeforeUpdateRepeatedRunTrue();
+        String addDescription = 'updated '+System.now();
         for (Account account : newAccountsByIds.values()) {
             if (account.Description != null) {
-                account.Description = account.Description+'\n updated '+System.now();
+                account.Description = account.Description+'\n' + addDescription;
             } else {
-                account.Description = 'updated '+System.now();
+                account.Description = addDescription;
             }
         }
     }
 
     public static void createNewTaskForHighPriority(
             Map<Id, Account> newAccountsByIds, Map<Id, Account> oldAccountsByIds) {
+        String priority = 'High';
         if (TriggerContext.isAfterUpdateRepeatedRun()) {
             return;
         }
@@ -63,8 +65,8 @@ public with sharing class AccountTriggerHandlerHelper {
         List<Task> tasks = new List<Task>();
         List <User> activeUsers = [SELECT Id FROM User WHERE IsActive = TRUE];
         for (Account account : newAccountsByIds.values()) {
-            if (account.CustomerPriority__c == 'High' &&
-                    oldAccountsByIds.get(account.Id).CustomerPriority__c != 'High') {
+            if (account.CustomerPriority__c == priority &&
+                    oldAccountsByIds.get(account.Id).CustomerPriority__c != priority) {
                 Task newTask = new Task(WhatId = account.Id, Subject = 'Negotiations with High priority Account'
                         +account.Name, OwnerId = TaskForNewAccount.getRandomUser(activeUsers).Id);
                 tasks.add(newTask);

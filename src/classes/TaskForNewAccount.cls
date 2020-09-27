@@ -1,18 +1,18 @@
 global class TaskForNewAccount {
     @InvocableMethod(Label = 'Create new Task object'
             Description = 'Creates new Task object for new or updated Accounts')
-    public static void addTaskForUpdatedAccount(List<InvocableVariablesWrapper> insertedRecords) {
+    public static void addTaskForUpsertedAccount(List<InvocableVariablesWrapper> upsertedRecords) {
         List<Id>accIds = new List<Id>();
-        for (InvocableVariablesWrapper insertedRecord : insertedRecords) {
+        for (InvocableVariablesWrapper insertedRecord : upsertedRecords) {
             accIds.add(insertedRecord.account.Id);
         }
         List<Task> tasks = [SELECT Id, WhatId FROM Task WHERE Account.Id IN :accIds];
         List <User> activeUsers = [SELECT Id FROM User WHERE IsActive = TRUE];
-        for (InvocableVariablesWrapper insertedRecord : insertedRecords) {
-            List<Task> accountTasks = getAccountTasks(tasks, insertedRecord.account.Id);
+        for (InvocableVariablesWrapper upsertedRecord : upsertedRecords) {
+            List<Task> accountTasks = getAccountTasks(tasks, upsertedRecord.account.Id);
             User randomUser = getRandomUser(activeUsers);
-            if (insertedRecord.IsNew || accountTasks.size() < 3) {
-                Task task = createTask(insertedRecord.account);
+            if (upsertedRecord.IsNew || accountTasks.size() < 3) {
+                Task task = createTask(upsertedRecord.account);
                 task.OwnerId = randomUser.Id;
                 tasks.add(task);
             } else {
