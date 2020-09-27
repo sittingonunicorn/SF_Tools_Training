@@ -25,6 +25,7 @@
         <members>TestFutureProcessor</members>
         <members>TestAddressCopierIterable</members>
         <members>TestAddressCopierQueryLocator</members>
+        <members>TestQueueableProcessor</members>
         <name>ApexClass</name>
     </types>
     <types>
