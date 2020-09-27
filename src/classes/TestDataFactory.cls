@@ -22,18 +22,13 @@ public with sharing class TestDataFactory {
         insert contacts;
     }
 
-    public static void updateContactsAccountSynced(Account account, String recordsName) {
+    public static void updateContactsAccountSynced(Account account, String recordsName, Boolean isSynced) {
         List<Contact> contacts = [SELECT Id FROM Contact WHERE LastName LIKE :recordsName+'%'];
         for (Contact contact : contacts) {
             contact.AccountId = account.Id;
-            contact.Is_Synced__c = false;
+            contact.Is_Synced__c = isSynced;
         }
         update contacts;
-    }
-
-    public static void createSingleAccount(String accountName) {
-        Account acc = new Account(Name = accountName);
-        insert acc;
     }
 
     public static void addAccountTasks(Account account, Integer tasksNumber, String taskSubject) {

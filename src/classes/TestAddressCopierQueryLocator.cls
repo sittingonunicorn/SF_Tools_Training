@@ -4,7 +4,7 @@
 
 @IsTest
 public with sharing class TestAddressCopierQueryLocator {
-    static String recordsName = 'TestIterable';
+    static String recordsName = 'TestQueryLocator';
     static String city = 'LA';
     static Integer batchSize = 200;
 
@@ -13,7 +13,7 @@ public with sharing class TestAddressCopierQueryLocator {
         TestDataFactory.createContactList(recordsName, batchSize);
         Account account = new Account(Name = recordsName, BillingCity = city);
         insert account;
-        TestDataFactory.updateContactsAccountSynced(account, recordsName);
+        TestDataFactory.updateContactsAccountSynced(account, recordsName, false);
     }
 
     @IsTest
@@ -31,7 +31,7 @@ public with sharing class TestAddressCopierQueryLocator {
                 WHERE Is_Synced__c = TRUE AND Account.Updated_By_Contact__c = TRUE
         ];
         System.debug(contacts.size());
-        System.assert(contacts.size()==200);
+        System.assert(contacts.size()==batchSize);
         for(Contact contact : contacts){
             System.assert(contact.MailingCity== city);
         }

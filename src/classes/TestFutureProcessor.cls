@@ -4,10 +4,17 @@
 
 @IsTest
 public with sharing class TestFutureProcessor {
+    static String recordsName = 'TestFuture';
+    static String city = 'LA';
+    static Integer recordsNumber = 150;
+
 
     @TestSetup
     public static void init(){
-        TestDataFactory.createContactList('TestFuture', 150);
+        TestDataFactory.createContactList(recordsName, recordsNumber);
+        Account account = new Account(Name = recordsName, BillingCity = city);
+        insert account;
+        TestDataFactory.updateContactsAccountSynced(account, recordsName, true);
     }
 
     @IsTest
@@ -26,7 +33,8 @@ public with sharing class TestFutureProcessor {
 
     private static List<Contact> getContacts() {
         List<Account> accounts = [
-                SELECT Id, Name, BillingAddress, (SELECT Id, LastName, Is_Synced__c, Processed_By_Future__c FROM Contacts)
+                SELECT Id, Name, BillingAddress,
+                (SELECT Id, LastName, Is_Synced__c, Processed_By_Future__c FROM Contacts)
                 FROM Account
                 LIMIT 150
         ];
