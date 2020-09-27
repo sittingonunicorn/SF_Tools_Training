@@ -31,6 +31,7 @@ public with sharing class TestDataFactory {
         update contacts;
     }
 
+
     public static void addAccountTasks(Account account, Integer tasksNumber, String taskSubject) {
         List <User> activeUsers = [SELECT Id FROM User WHERE IsActive = TRUE];
         List<Task> tasks = new List<Task>();
