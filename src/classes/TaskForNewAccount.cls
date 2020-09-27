@@ -7,9 +7,10 @@ global class TaskForNewAccount {
             accIds.add(insertedRecord.account.Id);
         }
         List<Task> tasks = [SELECT Id, WhatId FROM Task WHERE Account.Id IN :accIds];
+        List <User> activeUsers = [SELECT Id FROM User WHERE IsActive = TRUE];
         for (InvocableVariablesWrapper insertedRecord : insertedRecords) {
-            List<Task> accountTasks =  getAccountTasks(tasks, insertedRecord.account.Id);
-            User randomUser = getRandomUser();
+            List<Task> accountTasks = getAccountTasks(tasks, insertedRecord.account.Id);
+            User randomUser = getRandomUser(activeUsers);
             if (insertedRecord.IsNew || accountTasks.size() < 3) {
                 Task task = createTask(insertedRecord.account);
                 task.OwnerId = randomUser.Id;
@@ -33,8 +34,7 @@ global class TaskForNewAccount {
         return insertTasks;
     }
 
-    public static User getRandomUser() {
-        List <User> activeUsers = [SELECT Id FROM User WHERE IsActive = TRUE];
+    public static User getRandomUser(List <User> activeUsers) {
         User randomUser = activeUsers.get(
                 Integer.valueOf((Math.random() * (activeUsers.size()-1))));
         return randomUser;

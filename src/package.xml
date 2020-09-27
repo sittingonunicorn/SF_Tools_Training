@@ -19,6 +19,8 @@
         <members>TriggerContext</members>
         <members>EmailManager</members>
         <members>AccountTriggerHandlerHelper</members>
+        <members>TestTaskForNewAccount</members>
+        <members>TestDataFactory</members>
         <name>ApexClass</name>
     </types>
     <types>
