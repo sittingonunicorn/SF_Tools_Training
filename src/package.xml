@@ -23,6 +23,8 @@
         <members>TestDataFactory</members>
         <members>TestAccountTrigger</members>
         <members>TestFutureProcessor</members>
+        <members>TestAddressCopierIterable</members>
+        <members>TestAddressCopierQueryLocator</members>
         <name>ApexClass</name>
     </types>
     <types>
