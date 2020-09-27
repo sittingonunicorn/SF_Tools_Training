@@ -22,6 +22,7 @@
         <members>TestTaskForNewAccount</members>
         <members>TestDataFactory</members>
         <members>TestAccountTrigger</members>
+        <members>TestFutureProcessor</members>
         <name>ApexClass</name>
     </types>
     <types>

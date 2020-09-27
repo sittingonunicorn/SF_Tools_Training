@@ -13,6 +13,15 @@ public with sharing class TestDataFactory {
         insert accs;
     }
 
+    public static void createContactList(String lastName, Integer recordNumber) {
+        List<Contact> contacts = new List<Contact>();
+        for (Integer i = 0; i < recordNumber; i++) {
+            Contact contact = new Contact(LastName = lastName+i);
+            contacts.add(contact);
+        }
+        insert contacts;
+    }
+
     public static void createSingleAccount(String accountName) {
         Account acc = new Account(Name = accountName);
         insert acc;
