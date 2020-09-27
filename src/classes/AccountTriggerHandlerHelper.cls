@@ -57,10 +57,12 @@ public with sharing class AccountTriggerHandlerHelper {
         }
         TriggerContext.setAfterRepeatedRunTrue();
         List<Task> tasks = new List<Task>();
+        List <User> activeUsers = [SELECT Id FROM User WHERE IsActive = TRUE];
         for (Account account : newAccountsByIds.values()) {
-            if (account.CustomerPriority__c == 'High' && oldAccountsByIds.get(account.Id).CustomerPriority__c != 'High') {
+            if (account.CustomerPriority__c == 'High' &&
+                    oldAccountsByIds.get(account.Id).CustomerPriority__c != 'High') {
                 Task newTask = new Task(WhatId = account.Id, Subject = 'Negotiations with High priority Account'
-                        +account.Name, OwnerId = TaskForNewAccount.getRandomUser().Id);
+                        +account.Name, OwnerId = TaskForNewAccount.getRandomUser(activeUsers).Id);
                 tasks.add(newTask);
             }
         }
