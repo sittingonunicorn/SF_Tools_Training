@@ -56,7 +56,6 @@ public with sharing class TestAccountTrigger {
         Database.SaveResult result = Database.update(account, false);
         Test.stopTest();
 
-        System.debug([SELECT Id, Name, Description FROM Account WHERE Id = :result.id]);
         System.assert(result.isSuccess());
         System.assert([SELECT Id, Description FROM Account WHERE Id = :result.id]
                 .Description.contains(descriptionPart));
@@ -80,7 +79,6 @@ public with sharing class TestAccountTrigger {
         ];
         System.assert(result.isSuccess());
         System.assert(tasks != null);
-        System.debug(tasks.size());
         System.assert(tasks.size() == 1);
     }
 }
