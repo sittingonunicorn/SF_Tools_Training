@@ -3,7 +3,7 @@
  */
 
 @IsTest
-public with sharing class TestAccountManager {
+public with sharing class AccountManagerTest {
     public static String ENDPOINT_URL = 'https://eu27.salesforce.com/services/apexrest/Account/';
     public static String accountName = 'TestAccountManager';
     public static String accountPhone = '12345678';

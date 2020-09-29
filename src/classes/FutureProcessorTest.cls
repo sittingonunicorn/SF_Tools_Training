@@ -3,7 +3,7 @@
  */
 
 @IsTest
-public with sharing class TestFutureProcessor {
+public with sharing class FutureProcessorTest {
     static String recordsName = 'TestFuture';
     static String city = 'LA';
     static Integer recordsNumber = 150;

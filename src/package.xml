@@ -19,14 +19,14 @@
         <members>TriggerContext</members>
         <members>EmailManager</members>
         <members>AccountTriggerHandlerHelper</members>
-        <members>TestTaskForNewAccount</members>
+        <members>TaskForNewAccountTest</members>
         <members>TestDataFactory</members>
-        <members>TestAccountTrigger</members>
-        <members>TestFutureProcessor</members>
-        <members>TestAddressCopierIterable</members>
-        <members>TestAddressCopierQueryLocator</members>
-        <members>TestQueueableProcessor</members>
-        <members>TestAccountManager</members>
+        <members>AccountTriggerTest</members>
+        <members>FutureProcessorTest</members>
+        <members>AddressCopierIterableTest</members>
+        <members>AddressCopierQueryLocatorTest</members>
+        <members>QueueableProcessorTest</members>
+        <members>AccountManagerTest</members>
         <name>ApexClass</name>
     </types>
     <types>

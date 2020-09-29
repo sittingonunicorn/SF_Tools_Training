@@ -3,7 +3,7 @@
  */
 
 @IsTest
-public with sharing class TestTaskForNewAccount {
+public with sharing class TaskForNewAccountTest {
     static String accountName = 'TestTaskForNewAccount ';
     static String taskSubject = 'Negotiations with';
     static Integer recordNumber = 100;

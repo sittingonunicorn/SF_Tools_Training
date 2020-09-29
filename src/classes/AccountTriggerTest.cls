@@ -3,7 +3,7 @@
  */
 
 @IsTest
-public with sharing class TestAccountTrigger {
+public with sharing class AccountTriggerTest {
     static String accountName = 'TestTrigger';
     static String faxNumber = '12345678';
     static String descriptionPart = 'updated';

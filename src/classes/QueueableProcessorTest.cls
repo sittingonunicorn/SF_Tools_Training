@@ -2,7 +2,7 @@
  * Created by lina_ on 27.09.2020.
  */
 @IsTest
-public with sharing class TestQueueableProcessor {
+public with sharing class QueueableProcessorTest {
     static String recordsName = 'TestQueueable';
     static String city = 'SF';
     static Integer recordsNumber = 150;

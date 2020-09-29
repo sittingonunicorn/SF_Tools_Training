@@ -3,9 +3,9 @@
  */
 
 @IsTest
-public with sharing class TestAddressCopierQueryLocator {
-    static String recordsName = 'TestQueryLocator';
-    static String city = 'LA';
+public with sharing class AddressCopierIterableTest {
+    static String recordsName = 'TestIterable';
+    static String city = 'NY';
     static Integer batchSize = 200;
 
     @TestSetup
@@ -16,11 +16,12 @@ public with sharing class TestAddressCopierQueryLocator {
         TestDataFactory.updateContactsAddAccountSynced(account, recordsName, false);
     }
 
+
     @IsTest
     public static void shouldCopyAddressSyncedUpdated() {
 
         Test.startTest();
-        AddressCopierQueryLocator testedInstance = new AddressCopierQueryLocator();
+        AddressCopierIterable testedInstance = new AddressCopierIterable();
         Database.executeBatch(testedInstance);
         Test.stopTest();
 
